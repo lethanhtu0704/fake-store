@@ -9,7 +9,7 @@ import { RootState } from '../store/store'
 const Filters = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { filter, all__products } = useSelector((state: RootState) => state.products)
-  const { name, category, company, color, min__price, max__price, price, free__shipping } = filter
+  const { name, category, free__shipping } = filter
   const categories = getUniqueValues(all__products, 'category')
 
   const filterChangeHandler = (e: any) => {

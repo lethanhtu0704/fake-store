@@ -19,7 +19,4 @@ const RootComponent: FunctionComponent = () => {
   )
 }
 
-function loader(){
-  
-}
 export default RootComponent
