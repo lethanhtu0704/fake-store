@@ -16,7 +16,7 @@ const Hero = () => {
           Comfort zone
         </h1>
         <p>
-          G - Interior is specializing in elegant modern interior design and
+          Redux Store is specializing in elegant modern interior design and
           construction. Leading in mixing and matching interior design, we
           create unique living spaces for our customers.
         </p>

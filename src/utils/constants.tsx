@@ -1,21 +1,27 @@
 
 import { GiCompass, GiDiamondHard, GiStabbedNote } from "react-icons/gi";
+import { GrHomeRounded } from "react-icons/gr";
+import { CgGift } from "react-icons/cg";
+import { FaRegQuestionCircle } from "react-icons/fa";
 // For the value of nav bar
 export const links = [
   {
     id: 1,
     text: "home",
     url: "/home",
+    icon: <GrHomeRounded color="#ab7b60"/>,
   },
   {
     id: 2,
     text: "about",
     url: "/about",
+    icon: <FaRegQuestionCircle style={{}} color="#ab7b60" size={38} />
   },
   {
     id: 3,
     text: "products",
     url: "/products",
+    icon: <CgGift color="#ab7b60" />
   },
 ];
 

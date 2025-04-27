@@ -1,5 +1,7 @@
 // Convert the amount of money that receive from the API
 
+import { ProductModel } from "../types/product";
+
 export const formatPrice = (number:number) => {
   const numberFormat = new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -8,10 +10,10 @@ export const formatPrice = (number:number) => {
   return numberFormat;
 };
 
-// export const getUniqueValues = (arr, key) => {
-//   let keyFeature = arr.map((item) => item[key]);
-//   if (key === "colors") {
-//     keyFeature = keyFeature.flat();
-//   }
-//   return ["all", ...new Set(keyFeature)];
-// };
+export const getUniqueValues = (arr:ProductModel[], key:keyof ProductModel) => {
+  let keyFeature = arr.map((item) => item[key]);
+  if (key === "colors" as string) {
+    keyFeature = keyFeature.flat();
+  }
+  return ["all", ...new Set(keyFeature)];
+};

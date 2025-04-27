@@ -1,23 +1,28 @@
 import styled from "styled-components";
-import logo2 from "../assets/logo2.PNG";
+import logoMain from "../assets/logoMain.png";
 import { FaBars } from "react-icons/fa";
 import { links } from "../utils/constants";
 import CartButtons from "./CartButtons";
 import { NavLink } from "react-router";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store/store";
+import { toggleSideBar } from "../store/StylingSlice";
 
-// import { useProductsContext } from "../context/main_context";
-// import { useUserContext } from "../context/user_context";
+
 
 const Nav = () => {
+
+  const dispatch = useDispatch<AppDispatch>()
+  
   
   return (
     <NavContainer>
       <div className="nav-center">
         <div className="nav-header">
           <NavLink to="home">
-            <img src={logo2} alt="a logo" />
+            <img src={logoMain} alt="a logo" />
           </NavLink>
-          <button className="nav-toggle" >
+          <button onClick={() => dispatch(toggleSideBar())} className="nav-toggle" >
             <FaBars></FaBars>
           </button>
         </div>
@@ -25,7 +30,7 @@ const Nav = () => {
           {links.map((link) => {
             return (
               <li key={link.id}>
-                <NavLink to={`${link.url}`}>{link.text}</NavLink>
+                <NavLink to={`${link.url}`} >{link.text}</NavLink>
               </li>
             );
           })}

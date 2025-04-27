@@ -1,4 +1,5 @@
 import { FunctionComponent } from "react";
+import { Link } from "react-router";
 import styled from "styled-components";
 const Footer: FunctionComponent = () => {
   return (
@@ -6,9 +7,9 @@ const Footer: FunctionComponent = () => {
       <h5>
         © {new Date().getFullYear()}
         <span>
-          <a href="#"> G - Interior </a>
+          <Link to="/"> Redux Store</Link>.    All rights reserved
         </span>
-        All rights reserved
+      
       </h5>
     </Wrapper>
   );

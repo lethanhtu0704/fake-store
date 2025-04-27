@@ -1,22 +1,21 @@
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link } from "react-router";
 import styled from "styled-components";
-// import { useCartContext } from "../context/cart_context";
-// import { useProductsContext } from "../context/main_context";
-// import { useUserContext } from "../context/user_context";
+import { RootState } from "../store/store";
+
 
 const CartButtons = () => {
-  // const { sideBarCloseHandler } = useProductsContext();
-
-  // const { total__item } = useCartContext();
-  // const { loginWithRedirect, logout, myUser } = useUserContext();
+  const {cart} = useSelector(
+    (state: RootState) => state.cart
+  );
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link to="/cart" className="cart-btn" >
         Cart
         <span className="cart-container">
           <FaShoppingCart></FaShoppingCart>
-          <span className="cart-value">{ 10}</span>
+          <span className="cart-value">{ cart.length }</span>
         </span>
       </Link>
       {true && (
