@@ -36,7 +36,7 @@ const Nav = () => {
           })}
           {true && (
             <li>
-              <NavLink to="/checkout">Checkout</NavLink>
+              <NavLink to="">Checkout</NavLink>
             </li>
           )}
         </ul>

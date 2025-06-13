@@ -1,12 +1,14 @@
 import { FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router'
+import {  useNavigate } from 'react-router'
 import { FaCheck } from 'react-icons/fa'
 import AmountButtons from './AmountButtons'
 import { ProductModel } from '../types/product'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../store/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../store/store'
 import { addToCart } from '../store/CartSlice'
+import Toast from './Toast'
+import { PiSealWarningFill } from "react-icons/pi";
 
 const AddToCart: FunctionComponent<{ colors: string[]; stock: number; products: ProductModel; id: string }> = ({
   colors,
@@ -17,7 +19,9 @@ const AddToCart: FunctionComponent<{ colors: string[]; stock: number; products: 
   const [mainColor, setMainColor] = useState(colors[0])
   const [amountCart, setAmountCart] = useState(1)
   const dispatch = useDispatch<AppDispatch>()
-
+  const navigate = useNavigate()
+ const auth = useSelector((state: RootState) => state.auth)
+ const [showToast, setShowToast] = useState(false)
   const increaseCartHandler = () => {
     setAmountCart((prev) => {
       let tempAmount = prev + 1
@@ -65,16 +69,22 @@ const AddToCart: FunctionComponent<{ colors: string[]; stock: number; products: 
           decrease={decreaseCartHandler}
           amountCart={amountCart}
         ></AmountButtons>
-        <Link
-          to='/cart'
+        <button
+          
           className='btn'
           onClick={() => {
+            if(!auth.isAuthenticated){
+              setShowToast(true)
+              return ;
+            }
             const payload = {amountCart, products, mainColor, id}
             dispatch(addToCart(payload))
+            navigate('/cart')
           }}
         >
           Add to cart
-        </Link>
+        </button>
+         { showToast && <Toast message="Please log in first to continue!" icon={<PiSealWarningFill  color="#dc2743" />}  onClose={() => setShowToast(false)} />}
       </div>
     </Wrapper>
   )

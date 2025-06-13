@@ -1,40 +1,60 @@
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { Link } from "react-router";
-import styled from "styled-components";
-import { RootState } from "../store/store";
-
+import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
+import styled from 'styled-components'
+import { AppDispatch, RootState } from '../store/store'
+import { logout } from '../store/AuthSlice'
+import { toggleSideBar } from '../store/StylingSlice'
+import { useState } from 'react'
+import { PiSealWarningFill } from 'react-icons/pi'
+import Toast from './Toast'
 
 const CartButtons = () => {
-  const {cart} = useSelector(
-    (state: RootState) => state.cart
-  );
+  const auth = useSelector((state: RootState) => state.auth)
+  const { cart } = useSelector((state: RootState) => state.cart)
+  const navigate = useNavigate()
+   const [showToast, setShowToast] = useState(false)
+  const dispatch = useDispatch<AppDispatch>()
+  const handleAuthen = ():void => {
+     dispatch(toggleSideBar())
+     auth.isAuthenticated ? dispatch(logout()) : navigate('login')
+  }
   return (
-    <Wrapper className="cart-btn-wrapper">
-      <Link to="/cart" className="cart-btn" >
+    <Wrapper className='cart-btn-wrapper'>
+      <button  className='cart-btn'  onClick={() => {
+                  if(!auth.isAuthenticated){
+                    setShowToast(true)
+                    return ;
+                  }
+                 
+                  navigate('/cart')
+                }}>
         Cart
-        <span className="cart-container">
+        <span className='cart-container'>
           <FaShoppingCart></FaShoppingCart>
-          <span className="cart-value">{ cart.length }</span>
+          <span className='cart-value'>{cart.length}</span>
         </span>
-      </Link>
-      {true && (
-        <button type="button" className="auth-btn" onClick={()=>{}}>
-          Login <FaUserPlus></FaUserPlus>
-        </button>
-      )}
-      {false && (
-        <button
-          type="button"
-          className="auth-btn"
-          onClick={() => {}}
-        >
-          Logout <FaUserMinus></FaUserMinus>
-        </button>
-      )}
+      </button>
+      <button
+        type='button'
+        className='auth-btn'
+        onClick={handleAuthen}
+      >
+        {auth.isAuthenticated ? (
+          <>
+            Logout <FaUserMinus />
+          </>
+        ) : (
+           <>
+            Login <FaUserPlus />
+          </>
+          
+        )}
+      </button>
+        { showToast && <Toast message="Please log in first to continue!" icon={<PiSealWarningFill  color="#dc2743" />}  onClose={() => setShowToast(false)} />}
     </Wrapper>
-  );
-};
+  )
+}
 
 const Wrapper = styled.div`
   display: grid;
@@ -49,6 +69,9 @@ const Wrapper = styled.div`
     color: var(--clr-grey-1);
     display: flex;
     align-items: center;
+    border:none;
+    background-color : unset;
+    cursor: pointer;
   }
   .cart-container {
     display: flex;
@@ -87,5 +110,5 @@ const Wrapper = styled.div`
       margin-left: 5px;
     }
   }
-`;
-export default CartButtons;
+`
+export default CartButtons

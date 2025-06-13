@@ -12,7 +12,6 @@ import Loading from '../components/Loading'
 
 const SingleProductPage = () => {
   const params = useParams()
-  // const navigate  = useNavigate();
   const { product } = useSelector((state: RootState) => state.products)
   const {isLoading} = useSelector(
     (state: RootState) => state.styling
